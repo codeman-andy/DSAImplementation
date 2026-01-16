@@ -1,5 +1,7 @@
 #include "insertionSort.h"
 
+
+
  /*First attempt
 int* insertion(int* array, size_t length) {
     for(int unsorted = 1; unsorted < length; unsorted++) {
@@ -39,13 +41,3 @@ int* insertionSort(int* array, size_t length) {
 
     return array;
 }
-
-/*
-int main() {
-    int array[] = {2, 7, 4, 1, 5, 3};
-    size_t length = sizeof(array) / sizeof(*array);
-    printArray(array, length);
-    int* sorted_array = insertion(array, length);
-    printArray(sorted_array, length);
-    return 0;
-}*/

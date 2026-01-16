@@ -1,5 +1,7 @@
 #include "quickSort.h"
 
+
+
 int __partition(int* array, int start, int end) {
     int pivot = array[end];
     int partition_index = start;
@@ -20,13 +22,3 @@ void quickSort(int* array, int start, int end) {
         quickSort(array, (partition_index + 1), end);
     }
 }
-
-/*
-int main() {
-    int array[] = {2, 7, 4, 1, 5, 3};
-    size_t length = sizeof(array) / sizeof(*array);
-    printArray(array, length);
-    quick(array, 0, (length - 1) );
-    printArray(array, length);
-    return 0;
-}*/

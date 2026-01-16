@@ -1,5 +1,7 @@
 #include "mergeSort.h"
 
+
+
 int* mergeSort(int* array, size_t length) {
     if (length == 1) {
         return array;
@@ -51,13 +53,3 @@ int* mergeSort(int* array, size_t length) {
 
     return sorted_array;
 }
-
-/*
-int main() {
-    int array[] = {2, 7, 4, 1, 5, 3};
-    size_t length = sizeof(array) / sizeof(*array);
-    printArray(array, length);
-    int* sorted_array = merge(array, length);
-    printArray(sorted_array, length);
-    return 0;
-}*/
