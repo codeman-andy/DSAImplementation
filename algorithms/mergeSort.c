@@ -6,9 +6,13 @@ int* mergeSort(int* array, size_t length) {
     if (length == 1) {
         return array;
     }
+    
+    printf("\n");
+    printArray(array, length);
 
     int half_point = length / 2;
     int left[half_point];
+
     int right_length = length - half_point;
     int right[right_length];
 
@@ -24,6 +28,7 @@ int* mergeSort(int* array, size_t length) {
     int* right_sorted = mergeSort(right, right_length);
 
     int* sorted_array = (int*) calloc(length, sizeof(int));
+
     int left_index, right_index, arr_index;
     left_index = right_index = arr_index = 0;
     while (left_index < half_point && right_index < right_length) {
@@ -37,11 +42,13 @@ int* mergeSort(int* array, size_t length) {
         }
         arr_index++;
     }
+
     while (left_index < half_point) {
         sorted_array[arr_index] = left_sorted[left_index];
         arr_index++;
         left_index++;
     }
+    
     while (right_index < right_length) {
         sorted_array[arr_index] = right_sorted[right_index];
         arr_index++;
@@ -50,6 +57,11 @@ int* mergeSort(int* array, size_t length) {
 
     free(left_sorted);
     free(right_sorted);
+
+    printf("\n");
+    printArray(array, length);
+    printf("Resolves into...\n");
+    printArray(sorted_array, length);
 
     return sorted_array;
 }

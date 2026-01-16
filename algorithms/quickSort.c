@@ -5,6 +5,7 @@
 int __partition(int* array, int start, int end) {
     int pivot = array[end];
     int partition_index = start;
+
     for(int i = start; i < end; i++) {
         if (array[i] <= pivot) {
             swap(&array[i], &array[partition_index]);
@@ -12,6 +13,7 @@ int __partition(int* array, int start, int end) {
         }
     }
     swap(&array[partition_index], &array[end]);
+    
     return partition_index;
 }
 
