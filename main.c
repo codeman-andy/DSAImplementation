@@ -223,7 +223,7 @@ int main() {
         scanf("%d", input);
     }
 
-    printf("Thank you for demo-ing my DSA implementation! Please hire me.\nGoodbye!");
+    printf("Thank you for demo-ing my DSA implementation! Hope to talk to you soon!\nGoodbye!");
 
     return 0;
 }
