@@ -19,8 +19,17 @@
 #define PRINT_KEY 3
 #define PRINT_TABLE 4
 
+#define STACK 4
+#define PUSH 1
+#define POP 2
+#define TOP 3
+#define PRINT_STACK 4
+
+#define PRINT_STRUCTURES 5
+
 typedef struct Structure {
     char* name;
+    size_t type;
     void* head;
 } Structure;
 

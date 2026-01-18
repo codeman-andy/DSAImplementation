@@ -70,12 +70,18 @@ int deleteNode(LinkedListNode** head, void* data) {
 }
 
 void printList(LinkedListNode* head) {
-    printf("List:");
     while (head != NULL) {
         printf(" %d", *((int*) head->data));
         head = head->next;
     }
     printf("\n");
+}
+
+void printListNEWLINE(LinkedListNode* head) {
+    while (head != NULL) {
+        printf("%d\n", *((int*) head->data));
+        head = head->next;
+    }
 }
 
 int reverseList(LinkedListNode** head) {
