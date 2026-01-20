@@ -1,6 +1,18 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "binarySearchTree.h"
+#include "hashTable.h"
+#include "linkedList.h"
+#include "stack.h"
+
+#define ERROR 0
+#define SUCCESS 1
+
 #define LINKED_LIST 1
 #define ADD 1
 #define DELETE 2
@@ -25,7 +37,7 @@
 #define TOP 3
 #define PRINT_STACK 4
 
-#define PRINT_STRUCTURES 5
+#define FETCH_STRUCTURE 5
 
 typedef struct Structure {
     char* name;

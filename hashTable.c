@@ -323,7 +323,7 @@ void printKeys() {
     printf("\n");
 }
 
-void printNodes(HTNode* head) {
+void __printNodes(HTNode* head) {
     while (head != NULL) {
         printf("The value for key %d is: %d\n", *((int*) head->key), *((int*) head->value));
         head = head->next;
@@ -334,38 +334,8 @@ void printTable() {
     HashTable* table = MOTHERLOAD->head_table;
     while (table != NULL) {
         for (int i = 0; i < MOTHERLOAD->table_capacity; i++) {
-            if (table->nodes[i] != NULL) printNodes(table->nodes[i]);
+            if (table->nodes[i] != NULL) __printNodes(table->nodes[i]);
         }
         table = table->next;
     }
 }
-
-/*
-int main() {
-    __initMotherload(128);
-    printf("Hello!\n");
-    int a = 2;
-    int b = 10;
-    insertKey(&a, &b);
-    printf("Currently I have %d table.\n", MOTHERLOAD->total_num_tables);
-    int c = 4;
-    int d = 5;
-    insertKey(&c, &d);
-    printf("Now I have %d tables.\n", MOTHERLOAD->total_num_tables);
-    int e = 0;
-    int f = 1;
-    insertKey(&e, &f);
-    printf("Here are my values so far:\n");
-    printIntValue(&a);
-    printIntValue(&c);
-    printIntValue(&e);
-    deleteKey(&c);
-    printf("I have deleted key-4.\n");
-    printf("So now I have %d table.\n", MOTHERLOAD->total_num_tables);
-    printf("I will now try to delete key-4 again...\n");
-    deleteKey(&c);
-    __killMotherload();
-    printf("I have killed THE MOTHERLOAD: %p\n", MOTHERLOAD);
-    printf("Goodbye!");
-    return 0;
-}*/

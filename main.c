@@ -1,11 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-#include "binarySearchTree.h"
-#include "hashTable.h"
-#include "linkedList.h"
-#include "stack.h"
 #include "main.h"
 
 int input;
@@ -15,6 +7,34 @@ LinkedListNode* user_structures;
 void clear_buffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) { }
+}
+
+void createStructure() {
+    char name[256];
+    
+    clear_buffer();
+    printf("Enter a name for this structure: ");
+    fgets(name, 256, stdin);
+    name[strcspn(name, "\n")] = 0; // Removes the new-line character from the Name
+
+    //head = initializeList(&name); // Why does passing only "name" makes the compiler interpret it as an integer without a cast, but in the initialize function itself it becomes a char?
+    structure = (Structure*) calloc(1, strlen(name) + sizeof(size_t) + 4);
+    structure->name = (char*) calloc(1, strlen(name));
+    memcpy(structure->name, name, strlen(name));
+    structure->type = input;
+
+    appendNode(&user_structures, structure);
+
+    if (structure->type == HASH_TABLE) {
+        unsigned long capacity;
+        printf("What is the capacity for your hash table structure?\n");
+        scanf("%lu", &capacity);
+        structure->head = initiateHashTable(capacity);
+    }
+
+    if (structure->type == STACK) {
+        structure->head = createStack();
+    }
 }
 
 Structure* getStructure() {
@@ -28,8 +48,18 @@ Structure* getStructure() {
     return navigator->data;
 }
 
+int deleteStructure() {
+    if (!deleteNode(&user_structures, structure)) return ERROR;
+    free(structure);
+    structure = NULL;
+    return SUCCESS;
+}
+
 void printStructures() {
     LinkedListNode* navigator = user_structures;
+
+    printf("Currently active structures are:\n");
+
     int index = 1;
     while(navigator != NULL) {
         Structure* current = (Structure*) navigator->data;
@@ -37,7 +67,15 @@ void printStructures() {
         navigator = navigator->next;
         index++;
     }
-    printf("\n");
+    printf("0. Exit\n");
+}
+
+int fetchStructure() {
+    printStructures();
+    printf("Which structure would you like to choose? (Choose index)\n");
+    scanf("%d", &input);
+    if (input == EXIT) return EXIT;
+    structure = getStructure();
 }
 
 int interpretAction(int command) {
@@ -79,7 +117,7 @@ int interpretAction(int command) {
             printList(structure->head);
         }
         if (command == KILL) {
-            if (killList(&(structure->head))) printf("The list has been successfully deleted.\n");
+            if (killList(&(structure->head)) && deleteStructure()) printf("The list has been successfully deleted.\n");
             else printf("There was an error while attempting to delete the list.\n");
             return EXIT;
         }
@@ -119,7 +157,7 @@ int interpretAction(int command) {
             printLevelOrder(structure->head);
         }
         if (command == KILL) {
-            if (killBSTree(&(structure->head))) printf ("The binary search tree has been successfully deleted!\n");
+            if (killBSTree(&(structure->head)) && deleteStructure()) printf ("The binary search tree has been successfully deleted!\n");
             else printf("There was an error while attempting to delete your binary search tree.\n");
             return EXIT;
         }
@@ -181,7 +219,7 @@ int interpretAction(int command) {
             printStack(structure->head);
         }
         if (command == KILL) {
-            if (clearStack(structure->head)) printf("The stack has been successfully deleted.\n");
+            if (clearStack(structure->head) && deleteStructure()) printf("The stack has been successfully deleted.\n");
             else printf("There was an error when attempting to delete the stack.\n");
         }
     }
@@ -246,19 +284,19 @@ int actionsStack() {
 }
 
 void actions() {
-    if (input == LINKED_LIST) {
+    if (structure->type == LINKED_LIST) {
         actionsLinkedList();
     }
 
-    if (input == BSTREE) {
+    else if (structure->type == BSTREE) {
         actionsBSTree();
     }
 
-    if (input == HASH_TABLE) {
+    else if (structure->type == HASH_TABLE) {
         actionsHashTable();
     }
 
-    if (input == STACK) {
+    else if (structure->type == STACK) {
         actionsStack();
     }
 }
@@ -266,72 +304,29 @@ void actions() {
 int interpreter() {
     if (input == EXIT) return EXIT;
 
-    if (input == PRINT_STRUCTURES) {
-        printf("Currently active structures are:\n");
-        printStructures();
-        printf("Which structure would you like to choose? (Choose an index)\n");
-        scanf("%d", &input);
-        if (input == EXIT) return EXIT;
-        structure = getStructure();
-        input = structure->type;
+    if (input == FETCH_STRUCTURE) {
+        if (fetchStructure() == EXIT) return 1;
         actions();
         return 1;
     }
 
-    char name[256];
-    
-    clear_buffer();
-    printf("Enter a name for this structure: ");
-    fgets(name, 256, stdin);
-    name[strcspn(name, "\n")] = 0; // Removes the new-line character from the Name
+    createStructure();
 
-    //head = initializeList(&name); // Why does passing only "name" makes the compiler interpret it as an integer without a cast, but in the initialize function itself it becomes a char?
-    structure = (Structure*) calloc(1, strlen(name) + sizeof(size_t) + 4);
-    structure->name = (char*) calloc(1, strlen(name));
-    memcpy(structure->name, name, strlen(name));
-
-    appendNode(&user_structures, structure);
-
-    if (input == LINKED_LIST) {
-        structure->type = LINKED_LIST;
-        actionsLinkedList();
-    }
-
-    if (input == BSTREE) {
-        structure->type = BSTREE;
-        actionsBSTree();
-    }
-
-    if (input == HASH_TABLE) {
-        structure->type = HASH_TABLE;
-        unsigned long capacity;
-        printf("How much should the capacity be for your hash table structure?\n");
-        scanf("%lu", &capacity);
-        structure->head = initiateHashTable(capacity);
-        actionsHashTable();
-    }
-
-    if (input == STACK) {
-        structure->type = STACK;
-        structure->head = createStack();
-        actionsStack();
-    }
+    actions();
 
     return 1;
 }
 
 int main() {
     printf("Address of Input before definition: %p\n", &input);
-    //input = (int*) calloc(1, sizeof(int));
     printf("Address of Input after definition: %p\n", &input);
     printf("Hello! Welcome to my Data Structures and Algorithms implementation.\n");
     char* ask_for_input = "Which data structure would you like to build?\n";
     printf(ask_for_input);
-    char* choices = "1. Linked List\n2. Binary Search Tree\n3. Hash Table\n4. Stack\n5. Print structures in-memory\n0. Exit\n";
+    char* choices = "1. Linked List\n2. Binary Search Tree\n3. Hash Table\n4. Stack\n5. Choose a structure in-memory\n0. Exit\n";
     printf(choices);
-    //fgets(input, sizeof(int), stdin);
     scanf("%d", &input);
-    while (interpreter()) {
+    while(interpreter()) {
         printf(ask_for_input);
         printf(choices);
         scanf("%d", &input);
