@@ -4,10 +4,7 @@
 #include "util.h"
 
 /*
-*array: Iterable to be sorted
-length: Size of the iterable
-
-Performs a selection-type sort on the input array of size length.
+Performs a selection-sort on an unordered array.
 */
 extern int* selectionSort(int* array, size_t length);
 

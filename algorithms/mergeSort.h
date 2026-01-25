@@ -4,10 +4,7 @@
 #include "util.h"
 
 /*
-*array: Iterable to be sorted
-length: Size of the iterable
-
-Performs a merge-type sort on the input array of size length.
+Performs a merge-sort on an unordered array.
 */
 extern int* mergeSort(int* array, size_t length);
 

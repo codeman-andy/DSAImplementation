@@ -4,10 +4,7 @@
 #include "util.h"
 
 /*
-*array: Iterable to be sorted
-length: Size of the iterable
-
-Performs an insert-type sort on the input array of size length.
+Performs an insert-sort on an unordered array.
 */
 extern int* insertionSort(int* array, size_t length);
 

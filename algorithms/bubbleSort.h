@@ -4,10 +4,7 @@
 #include "util.h"
 
 /*
-*array: Iterable to be sorted
-length: Size of the iterable
-
-Performs a bubble-type sort on the input array of size length.
+Performs a bubble-sort on an unordered array.
 */
 extern int* bubbleSort(int* array, size_t length);
 

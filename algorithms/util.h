@@ -6,9 +6,6 @@
 #include <string.h>
 
 /*
-*array: Iterable to be sorted
-length: Size of the iterable
-
 Prints an input array of size length.
 */
 extern void printArray(int* array, size_t length);

@@ -8,17 +8,12 @@ typedef struct Queue {
 } Queue;
 
 /*
-*queue: Pointer to a Queue
-*item: Pointer to add to the Queue
-
-Places a new pointer at the tail of the Queue.
+Places an item at the tail of a Queue.
 */
 extern void Enqueue(Queue* queue, void* item);
 
 /*
-*queue: The pointer to a Queue
-
-Takes out the first element from the Queue.
+Removes the element at the front of a Queue.
 */
 extern void Dequeue(Queue* queue);
 

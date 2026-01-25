@@ -4,10 +4,7 @@
 #include "util.h"
 
 /*
-*array: Iterable to be sorted
-length: Size of the iterable
-
-Performs a quick-type sort on the input array of size length.
+Performs a quick-sort on an unordered array.
 */
 extern void quickSort(int* array, int start, int end);
 

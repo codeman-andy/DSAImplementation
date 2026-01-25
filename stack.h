@@ -17,43 +17,32 @@ Returns a pointer to the newly-created Stack.
 extern Stack* createStack();
 
 /*
-Returns true if the Stack is empty, false otherwise.
+Returns true if a Stack is empty, false otherwise.
 */
 extern bool isEmpty(Stack* stack);
 
 /*
-*stack: Pointer to a Stack
-
-Prints the Stack in a top-to-bottom manner.
+Prints a Stack in a top-to-bottom manner.
 */
 extern void printStack(Stack* stack);
 
 /*
-*stack: Pointer to a Stack
-*item: Pointer to store on the Stack
-
-Pushes pointer to an item to the Stack
+Pushes an item to the top of a Stack.
 */
 extern void push(Stack* stack, void* item);
 
 /*
-*stack: Pointer to a Stack
-
-Pops pointer at the top of the Stack and returns it.
+Pops item at the top of a Stack and returns it.
 */
 extern void* pop(Stack* stack);
 
 /*
-*stack: Pointer to a Stack
-
-Returns pointer at the top of the Stack.
+Returns item at the top of a Stack.
 */
 extern void* top(Stack* stack);
 
 /*
-*stack: Pointer to a Stack
-
-Empties the Stack.
+Empties out a Stack.
 */
 extern int clearStack(Stack* stack);
 
