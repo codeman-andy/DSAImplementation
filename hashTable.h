@@ -32,7 +32,7 @@ extern HashTable* initiateHashTable(unsigned long capacity);
 /*
 hash: The key's correspondent hash
 *key: The key requested
-*value: The new value to update the key with.
+*value: The new value to update the key with
 
 Looks through the nodes at the given hash on the table until it finds the one containing the key.
 It then updates its value with the given input.

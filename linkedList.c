@@ -129,17 +129,3 @@ int killList(LinkedListNode** head) {
     
     return LL_SUCCESS;
 }
-
-/*int main() {
-    LinkedListNode* head = NULL;
-    head = initializeList(1);
-    appendNode(head, 2);
-    appendNode(head, 6);
-    insertNode(head, 4, 1);
-    searchList(head);
-    reverseListRECURR(head, &head);
-    searchList(head);
-    deleteNode(head, 4);
-    searchList(head);
-    destroyList(head);
-}*/

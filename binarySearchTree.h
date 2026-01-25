@@ -12,8 +12,8 @@
 
 typedef struct BSTreeNode {
   void* data;
-  struct BSTreeNode *left;
-  struct BSTreeNode *right;
+  struct BSTreeNode* left;
+  struct BSTreeNode* right;
 } BSTreeNode;
 
 /*

@@ -2,14 +2,6 @@
 
 
 
-//Stack* stack;
-/*
-Stack* __initStack() {
-    stack = (Stack*) calloc(1, sizeof(Stack));
-
-    return stack;
-}*/
-
 bool isEmpty(Stack* stack) {
     return (stack->top == NULL);
 }
