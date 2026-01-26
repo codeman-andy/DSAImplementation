@@ -186,7 +186,7 @@ HashTable* __initMotherload(unsigned long capacity) {
     return MOTHERLOAD->free_table;
 }
 
-void __killMotherload() {
+int __killMotherload() {
     if (MOTHERLOAD->head_table != MOTHERLOAD->tail_table) {
         HashTable* nextTable = MOTHERLOAD->head_table->next;
         __killTable(MOTHERLOAD->head_table);
@@ -199,6 +199,8 @@ void __killMotherload() {
         free(MOTHERLOAD);
         MOTHERLOAD = NULL;
     }
+
+    return HT_SUCCESS;
 }
 
 HashTable* initiateHashTable(unsigned long capacity) {
@@ -289,19 +291,26 @@ void* getValue(void* key) {
     if (!__keyExists(hash, key)) return NOT_FOUND;
 
     HashTable* table = __findTable(hash, key);
-
     HTNode* node = table->nodes[hash];
-    while (node->key != key) {
+
+    while (*((int*) node->key) != *((int*) key)) {
         node = node->next;
     }
 
     return node->value;
 }
 
-void printIntValue(void* key) {
+int printIntValue(void* key) {
     void* value = getValue(key);
+
+    if (value == NULL) {
+        printf("The key requested does not exist.\n");
+        return HT_NOT_FOUND;
+    }
     
     printf("The value for key %d is: %d\n", *((int*) key), *((int*) value));
+
+    return HT_SUCCESS;
 }
 
 void printNodesKeys(HTNode* head) {

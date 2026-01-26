@@ -76,151 +76,193 @@ int fetchStructure() {
     scanf("%d", &input);
     if (input == EXIT) return EXIT;
     structure = getStructure();
+    return SUCCESS;
 }
 
 int interpretAction(int command) {
     if (command == EXIT) return EXIT;
 
-    if (command > 9) {
-        printf("Invalid command. Please try again.\n");
-        return 1;
-    }
-
     if (structure->type == LINKED_LIST) {
-        int data;
-        if (command == ADD) {
-            int* data = (int*) calloc(1, sizeof(int));
+        LinkedListNode** linked_list_address = (LinkedListNode**) &(structure->head);
+
+        switch (command) {
+        case ADD:
             printf("What do you want to add?\n");
+            int* data = (int*) calloc(1, sizeof(int));
             scanf("%d", data);
-            appendNode(&(structure->head), data);
+            appendNode(linked_list_address, data);
             printf("List:");
             printList(structure->head);
-        }
-        if (command == DELETE) {
+            break;
+
+        case DELETE:
             printf("Which entry would you like to delete?\n");
             printf("List:");
             printList(structure->head);
-            scanf("%d", &data);
-            if (deleteNode(&(structure->head), &data)) printf("Entry successfully deleted!\n");
+            int entry;
+            scanf("%d", &entry);
+            if (deleteNode(linked_list_address, &entry)) printf("Entry successfully deleted!\n");
             else printf("The value you were trying to delete does not exist.\n");
-        }
-        if (command == REVERSE) {
+            break;
+        
+        case REVERSE:
             printf("List:");
             printList(structure->head);
-            reverseList(&structure->head);
+            reverseList(linked_list_address);
             printf("Has become...\n");
             printf("List:");
             printList((structure->head));
-        }
-        if (command == PRINT) {
+            break;
+        
+        case PRINT:
             printf("List:");
             printList(structure->head);
-        }
-        if (command == KILL) {
-            if (killList(&(structure->head)) && deleteStructure()) printf("The list has been successfully deleted.\n");
+            break;
+        
+        case KILL:
+            if (killList(linked_list_address) && deleteStructure()) printf("The list has been successfully deleted.\n");
             else printf("There was an error while attempting to delete the list.\n");
             return EXIT;
+
+        default:
+            printf("Invalid command. Please try again.\n");
+            return 1;
         }
-        
     }
 
     if (structure->type == BSTREE) {
-        int data;
-        if (command == ADD) {
-            int* data = (int*) calloc(1, sizeof(int));
+        BSTreeNode** bstree_address = (BSTreeNode**) &(structure->head);
+
+        switch (command) {
+        case ADD:
             printf("What do you want to add?\n");
+            int* data = (int*) calloc(1, sizeof(int));
             scanf("%d", data);
-            BSTreeNode** headPtr = (BSTreeNode**) &(structure->head);
-            insertBSTreeNode(headPtr, data);
+            insertBSTreeNode(bstree_address, data);
             printLevelOrder(structure->head);
-        }
-        if (command == DELETE) {
+            break;
+
+        case DELETE:
             printf("Which entry would you like to delete?\n");
             printLevelOrder(structure->head);
-            scanf("%d", &data);
-            if (deleteBSTNode(&(structure->head), &data)) printf("The entry has been successfully deleted!\n");
+            int entry;
+            scanf("%d", &entry);
+            if (deleteBSTNode(bstree_address, &entry)) printf("The entry has been successfully deleted!\n");
             else printf("The entry you were trying to delete does not exist.\n");
-        }
-        if (command == FIND_MIN) {
+            break;
+
+        case FIND_MIN:
+            printf("The minimum value in the tree is currently ");
             BSTreeNode* min = FindMin(structure->head);
-            printf("The minimum value in the tree is currently %d.\n", *((int*) min->data));
-        }
-        if (command == FIND_MAX) {
+            printf("%d.\n", *((int*) min->data));
+            break;
+
+        case FIND_MAX:
+            printf("The maximum value in the tree is currently ");
             BSTreeNode* max = FindMax(structure->head);
-            printf("The maximum value in the tree is currently %d.\n", *((int*) max->data));
-        }
-        if (command == FIND_HEIGHT) {
+            printf("%d.\n", *((int*) max->data));
+            break;
+
+        case FIND_HEIGHT:
+            printf("The tree's current height is ");
             int height = FindHeight(structure->head);
-            printf("The tree's current height is %d.\n", height);
-        }
-        if (command == LEVEL_ORDER) {
+            printf("%d.\n", height);
+            break;
+
+        case LEVEL_ORDER:
             printLevelOrder(structure->head);
-        }
-        if (command == KILL) {
-            if (killBSTree(&(structure->head)) && deleteStructure()) printf ("The binary search tree has been successfully deleted!\n");
+            break;
+
+        case KILL:
+            if (killBSTree(bstree_address) && deleteStructure()) printf ("The binary search tree has been successfully deleted!\n");
             else printf("There was an error while attempting to delete your binary search tree.\n");
             return EXIT;
-        }
 
+        default:
+            printf("Invalid command. Please try again.\n");
+            return 1;
+        }
     }
 
     if (structure->type == HASH_TABLE) {
-        int data;
-        if (command == ADD) {
-            int* key = (int*) calloc(1, sizeof(int));
+        HashTable** ht_address = (HashTable**) &(structure->head);
+
+        switch (command) {
+        case ADD:
             printf("Insert key: ");
+            int* key = (int*) calloc(1, sizeof(int));
             scanf("%d", key);
-            int* value = (int*) calloc(1, sizeof(int));
             printf("Insert value: ");
+            int* value = (int*) calloc(1, sizeof(int));
             scanf("%d", value);
-            insertKey(&(structure->head), key, value);
-        }
-        if (command == DELETE) {
+            insertKey(ht_address, key, value);
+            break;
+
+        case DELETE:
             printf("Which key would you like to delete?\n");
             printKeys();
+            int data;
             scanf("%d", &data);
-            if (deleteKey(&(structure->head), &data)) printf("The entry has been successfully deleted!\n");
+            if (deleteKey(ht_address, &data)) printf("The entry has been successfully deleted!\n");
             else printf("The entry you were trying to delete does not exist.\n");
-        }
-        if (command == PRINT_KEY) {
+            break;
+
+        case PRINT_KEY:
             printf("Which key would you like to print out?\n");
             printKeys();
-            scanf("%d", &data);
-            printIntValue(&data);
-        }
-        if (command == PRINT_TABLE) {
+            int selected_key;
+            scanf("%d", &selected_key);
+            if (!printIntValue(&selected_key)) printf("The key requested does not exist.\n");
+            break;
+
+        case PRINT_TABLE:
             printTable();
-        }
-        if (command == KILL) {
-            __killMotherload();
-            printf("The hash table has been deleted.\n");
+            break;
+
+        case KILL:
+            if (__killMotherload() && deleteStructure()) printf("The hash table has been deleted.\n");
+            else printf("There was an error when attempting to delete the hash table.\n");
             return EXIT;
+
+        default:
+            printf("Invalid command. Please try again.\n");
+            return 1;
         }
     }
 
     if (structure->type == STACK) {
-        int data;
-        if (command == PUSH) {
-            int* data = (int*) calloc(1, sizeof(int));
+        switch (command) {
+        case PUSH:
             printf("What do you want to add?\n");
+            int* data = (int*) calloc(1, sizeof(int));
             scanf("%d", data);
             push(structure->head, data);
             printStack(structure->head);
-        }
-        if (command == POP) {
+            break;
+
+        case POP:
             pop(structure->head);
             printStack(structure->head);
-        }
-        if (command == TOP) {
-            data = *((int*) top(structure->head));
-            printf("The top element on the stack is: %d\n", data);
-        }
-        if (command == PRINT_STACK) {
+            break;
+
+        case TOP:
+            printf("The top element on the stack is: ");
+            int top_of_stack = *((int*) top(structure->head));
+            printf("%d\n", top_of_stack);
+            break;
+
+        case PRINT_STACK:
             printStack(structure->head);
-        }
-        if (command == KILL) {
+            break;
+
+        case KILL:
             if (clearStack(structure->head) && deleteStructure()) printf("The stack has been successfully deleted.\n");
             else printf("There was an error when attempting to delete the stack.\n");
+            return EXIT;
+
+        default:
+            printf("Invalid command. Please try again.\n");
+            return 1;
         }
     }
 
@@ -284,37 +326,39 @@ int actionsStack() {
 }
 
 void actions() {
-    if (structure->type == LINKED_LIST) {
+    switch (structure->type) {
+    case LINKED_LIST:
         actionsLinkedList();
-    }
+        break;
 
-    else if (structure->type == BSTREE) {
+    case BSTREE:
         actionsBSTree();
-    }
+        break;
 
-    else if (structure->type == HASH_TABLE) {
+    case HASH_TABLE:
         actionsHashTable();
-    }
+        break;
 
-    else if (structure->type == STACK) {
+    case STACK:
         actionsStack();
+        break;
     }
 }
 
 int interpreter() {
-    if (input == EXIT) return EXIT;
+    switch (input) {
+    case EXIT: return EXIT;
 
-    if (input == FETCH_STRUCTURE) {
+    case FETCH_STRUCTURE:
         if (fetchStructure() == EXIT) return 1;
         actions();
         return 1;
+    
+    default:
+        createStructure();
+        actions();
+        return 1;
     }
-
-    createStructure();
-
-    actions();
-
-    return 1;
 }
 
 int main() {

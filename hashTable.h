@@ -1,7 +1,7 @@
 #ifndef HASHTABLE_H
 #define HASHTABLE_H
 
-#define HT_ERROR -1
+#define HT_ERROR 0
 #define HT_SUCCESS 1
 #define HT_NOT_FOUND 0
 
@@ -58,7 +58,7 @@ extern void* getValue(void* key);
 /*
 Converts a value-pointer to an INT-pointer and then prints it.
 */
-extern void printIntValue(void* key);
+extern int printIntValue(void* key);
 
 /*
 Prints all the keys currently stored.
@@ -69,5 +69,7 @@ extern void printKeys();
 Prints all the key-value pairs currently stored.
 */
 extern void printTable();
+
+extern int __killMotherload();
 
 #endif
